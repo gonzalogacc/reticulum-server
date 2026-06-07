@@ -1,8 +1,7 @@
-import os
+import argparse
 import sys
 import time
-import random
-import argparse
+
 import RNS
 
 from config import settings
@@ -25,20 +24,22 @@ def client(destination_hexhash, configpath, path, payload, *args, **kwargs):
         dest_len = (RNS.Reticulum.TRUNCATED_HASHLENGTH//8)*2
         if len(destination_hexhash) != dest_len:
             raise ValueError(
-                "Destination length is invalid, must be {hex} hexadecimal characters ({byte} bytes).".format(hex=dest_len, byte=dest_len//2)
+                f"Destination length is invalid, must be \
+                    {dest_len=} hexadecimal characters ({dest_len//2=} bytes)."
             )
             
         destination_hash = bytes.fromhex(destination_hexhash)
-    except:
+    except:  # noqa: E722
         RNS.log("Invalid destination entered. Check your input!\n")
         sys.exit(0)
 
     # We must first initialise Reticulum
-    reticulum = RNS.Reticulum(configpath)
+    RNS.Reticulum(configpath)
 
     # Check if we know a path to the destination
     if not RNS.Transport.has_path(destination_hash):
-        RNS.log("Destination is not yet known. Requesting path and waiting for announce to arrive...")
+        RNS.log("Destination is not yet known. \
+            Requesting path and waiting for announce to arrive...")
         RNS.Transport.request_path(destination_hash)
         while not RNS.Transport.has_path(destination_hash):
             time.sleep(0.1)
@@ -95,7 +96,8 @@ def link_established(link):
 
     # Inform the user that the server is
     # connected
-    RNS.log("Link established with server, hit enter to perform a request, or type in \"quit\" to quit")
+    RNS.log("Link established with server, \
+        hit enter to perform a request, or type in \"quit\" to quit")
 
 # When a link is closed, we'll inform the
 # user, and exit the program
@@ -152,17 +154,13 @@ if __name__ == "__main__":
 
         args = parser.parse_args()
 
-        if args.config:
-            configarg = args.config
-        else:
-            configarg = None
-
-        if (args.destination == None):
+        if (args.destination is None):
             print("")
             parser.print_help()
             print("")
+
         else:
-            client(args.destination, configarg, path=args.path, payload=args.payload)
+            client(args.destination, args.config, path=args.path, payload=args.payload)
 
     except KeyboardInterrupt:
         print("")

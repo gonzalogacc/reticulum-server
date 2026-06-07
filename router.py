@@ -1,8 +1,6 @@
-from typing import Callable
+from collections.abc import Callable
 
 import RNS
-import random
-
 
 
 class Route:
@@ -18,7 +16,7 @@ class Router:
     
     def __init__(self, prefix: str | None = None):
         self.prefix = prefix
-        self.ROUTES_REGISTRY = []
+        self.ROUTES_REGISTRY: list[Route] = []
 
     def route_decorator(self, path):
         """Route decorator to add paths to the router."""
@@ -29,13 +27,20 @@ class Router:
 
                 try:
                     # Run the callback function and return the result
-                    result = func(path, data, request_id, link_id, remote_identity, requested_at)
+                    result = func(
+                        path, 
+                        data, 
+                        request_id, 
+                        link_id, 
+                        remote_identity, 
+                        requested_at
+                    )
                     return result
                 except Exception as e:
                     RNS.log(f"Error executing route '{path}': {str(e)}")
                     raise e
         
-            # Attach the wrapped function to the router callback to be used by the server
+            # Attach the wrapped function to the router callback for the server
             router_instance = Route(
                 url=path,
                 callback=wrapped

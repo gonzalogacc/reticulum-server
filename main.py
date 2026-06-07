@@ -1,10 +1,11 @@
 import argparse
-from functools import partial
-from pathlib import Path
 import sys
+from pathlib import Path
+
 from watchfiles import run_process
-from server import Server
+
 from custom_rutes import routes
+from server import Server
 
 
 def run_server(config):
@@ -27,10 +28,7 @@ if __name__ == "__main__":
         )
 
         args = parser.parse_args()
-        if args.config:
-            configarg = args.config
-        else:
-            configarg = None
+        configarg = args.config or None
 
         run_process(Path.cwd(), target=run_server, args=(configarg,))
 

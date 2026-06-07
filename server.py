@@ -1,14 +1,12 @@
 """Serve files via reticulum, but mine."""
 
-from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-import threading
 from time import sleep
+
 import RNS
 
 from config import settings
 from identity import create_identity
-
 from router import Router
 from utils import client_connected
 
@@ -37,7 +35,7 @@ class Server:
         self.server_destination.set_link_established_callback(client_connected)
 
     def __call__(self):
-        RNS.log(f"Running server.")
+        RNS.log("Running server.")
         self.server_loop(self.server_destination)
     
     def announce_destination(self, destination):
@@ -53,7 +51,9 @@ class Server:
             )
 
     def server_loop(self, destination):
-        RNS.log(f"Request example {RNS.prettyhexrep(destination.hash)} running, waiting for a connection.")
+        RNS.log(f"Request example \
+                {RNS.prettyhexrep(destination.hash)} \
+                    running, waiting for a connection.")
 
         # This look keeps the server alive and annouces the server every N seconds
         while True:

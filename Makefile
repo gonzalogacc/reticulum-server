@@ -11,3 +11,11 @@ run:
 .PHONY: check
 check:
 	uv run ruff check
+
+.PHONY: fix
+fix:
+	uv run ruff check --fix
+
+.PHONY: mypy
+mypy:
+	uv run mypy *.py
