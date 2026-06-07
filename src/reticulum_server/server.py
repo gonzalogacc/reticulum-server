@@ -5,10 +5,10 @@ from time import sleep
 
 import RNS
 
-from config import settings
-from identity import create_identity
-from router import Router
-from utils import client_connected
+from .config import settings
+from .identity import create_identity
+from .router import Router
+from .utils import client_connected
 
 
 class Server:

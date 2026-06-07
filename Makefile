@@ -6,7 +6,7 @@ install:
 
 .PHONY: run
 run:
-	uv run python main.py
+	uv run ret-server
 
 .PHONY: check
 check:
@@ -18,7 +18,7 @@ fix:
 
 .PHONY: mypy
 mypy:
-	uv run mypy *.py
+	uv run mypy src/**/*.py
 
 .PHONY: format
 format:

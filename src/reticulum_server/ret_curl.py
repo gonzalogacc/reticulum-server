@@ -4,7 +4,7 @@ import time
 
 import RNS
 
-from config import settings
+from .config import settings
 
 ##########################################################
 #### Client Part #########################################
@@ -120,10 +120,8 @@ def link_closed(link):
 #### Program Startup #####################################
 ##########################################################
 
-# This part of the program runs at startup,
-# and parses input of from the user, and then
-# starts up the desired program mode.
-if __name__ == "__main__":
+
+def main():
     try:
         parser = argparse.ArgumentParser(description="Simple request/response example")
 
@@ -172,3 +170,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("")
         sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
