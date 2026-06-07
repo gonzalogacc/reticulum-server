@@ -5,12 +5,13 @@ repos:
         name: Run Make Test
         entry: make fix
         language: system
-        # files: '\.py$'
-        # pass_filenames: false
 
       - id: mypy
         name: Run Mypy
         entry: make mypy
         language: system
-        # files: '\.py$'
-        # pass_filenames: false
+
+      - id: format
+        name: Run Mypy
+        entry: make format
+        language: system

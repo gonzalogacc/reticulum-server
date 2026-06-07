@@ -1,5 +1,3 @@
-
-
 from pathlib import Path
 
 import RNS
@@ -11,4 +9,3 @@ def create_identity(identity_path: Path) -> RNS.Identity:
     if identity is None:
         raise Exception("Could not generate identity.")
     return identity
-

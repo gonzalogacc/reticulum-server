@@ -19,3 +19,7 @@ fix:
 .PHONY: mypy
 mypy:
 	uv run mypy *.py
+
+.PHONY: format
+format:
+	uv run ruff format .

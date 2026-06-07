@@ -12,7 +12,6 @@ from utils import client_connected
 
 
 class Server:
-    
     def __init__(self, config_path: Path):
 
         # A reference to the latest client link that connected
@@ -27,8 +26,8 @@ class Server:
             RNS.Destination.IN,
             RNS.Destination.SINGLE,
             settings.APP_NAME,
-            "requestexample"
-        ) 
+            "requestexample",
+        )
 
         # Set callbacks.
         # TODO (Gonza): move this to a function later for easier configuration
@@ -37,7 +36,7 @@ class Server:
     def __call__(self):
         RNS.log("Running server.")
         self.server_loop(self.server_destination)
-    
+
     def announce_destination(self, destination):
         destination.announce()
         RNS.log(f"Sent announce from {RNS.prettyhexrep(destination.hash)}")
@@ -46,14 +45,16 @@ class Server:
         for router_inst in router.ROUTES_REGISTRY:
             self.server_destination.register_request_handler(
                 router_inst.url,
-                response_generator = router_inst.callback,
-                allow = RNS.Destination.ALLOW_ALL
+                response_generator=router_inst.callback,
+                allow=RNS.Destination.ALLOW_ALL,
             )
 
     def server_loop(self, destination):
-        RNS.log(f"Request example \
+        RNS.log(
+            f"Request example \
                 {RNS.prettyhexrep(destination.hash)} \
-                    running, waiting for a connection.")
+                    running, waiting for a connection."
+        )
 
         # This look keeps the server alive and annouces the server every N seconds
         while True:

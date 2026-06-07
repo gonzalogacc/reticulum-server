@@ -11,11 +11,10 @@ from server import Server
 def run_server(config):
     server = Server(config)
     server.add_router(routes)
-    server() # This calls the __call__ method defined in server.py
+    server()  # This calls the __call__ method defined in server.py
 
 
 if __name__ == "__main__":
-    
     try:
         parser = argparse.ArgumentParser(description="Simple request/response example")
 
@@ -24,7 +23,7 @@ if __name__ == "__main__":
             action="store",
             default=None,
             help="path to alternative Reticulum config directory",
-            type=str
+            type=str,
         )
 
         args = parser.parse_args()
