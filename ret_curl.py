@@ -67,10 +67,6 @@ def client(destination_hexhash, configpath, path, payload, *args, **kwargs):
     link.set_link_established_callback(link_established)
     link.set_link_closed_callback(link_closed)
 
-    # Everything is set up, so let's enter a loop
-    # for the user to interact with the example
-    # client_loop()
-    # Wait for the link to become active
 
     while not server_link:
         time.sleep(0.1)
@@ -78,60 +74,16 @@ def client(destination_hexhash, configpath, path, payload, *args, **kwargs):
     response = server_link.request(
         path,
         data = payload,
-        response_callback = got_response,
-        failed_callback = request_failed
     )
 
     while response.get_status() == RNS.RequestReceipt.SENT:
-        time.sleep(.1)
+        ...
 
-    sys.stdout.write(response.get_response())
+    response = response.get_response()
+    print(response)
+    # sys.stdout.write(response.get_response())
+
     server_link.teardown()
-
-def client_loop():
-    global server_link
-
-    # Wait for the link to become active
-    while not server_link:
-        time.sleep(0.1)
-
-    should_quit = False
-    while not should_quit:
-        try:
-            print("> ", end=" ")
-            text = input()
-
-            # Check if we should quit the example
-            if text == "quit" or text == "q" or text == "exit":
-                should_quit = True
-                server_link.teardown()
-
-            else:
-                server_link.request(
-                    "/random/text",
-                    data = text,
-                    response_callback = got_response,
-                    failed_callback = request_failed
-                )
-
-
-        except Exception as e:
-            RNS.log("Error while sending request over the link: "+str(e))
-            should_quit = True
-            server_link.teardown()
-
-def got_response(request_receipt):
-    request_id = request_receipt.request_id
-    response = request_receipt.response
-
-    RNS.log("Got response for request "+RNS.prettyhexrep(request_id)+": "+str(response))
-
-def request_received(request_receipt):
-    RNS.log("The request "+RNS.prettyhexrep(request_receipt.request_id)+" was received by the remote peer.")
-
-def request_failed(request_receipt):
-    RNS.log("The request "+RNS.prettyhexrep(request_receipt.request_id)+" failed.")
-
 
 # This function is called when a link
 # has been established with the server
@@ -154,9 +106,6 @@ def link_closed(link):
         RNS.log("The link was closed by the server, exiting now")
     else:
         RNS.log("Link closed, exiting now")
-    
-    time.sleep(1.5)
-    sys.exit(0)
 
 ##########################################################
 #### Program Startup #####################################
