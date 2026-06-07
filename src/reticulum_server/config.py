@@ -5,8 +5,9 @@ from pathlib import Path
 @dataclass
 class Settings:
     APP_NAME: str = "example_utilities"
-    IDENTITY_PATH: Path = Path("/home/gonza/sources/fast-ret/test-server")
-    ANNOUNCE_INTERVAL_SECONDS: int = 10
+    IDENTITY_PATH: Path = Path("test-server")
+    CONFIG_FILE: Path = Path("~/.reticulum")
+    ANNOUNCE_INTERVAL_SECONDS: int = 60
 
 
 settings = Settings()
