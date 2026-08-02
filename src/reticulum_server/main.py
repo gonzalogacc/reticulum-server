@@ -7,6 +7,13 @@ from .custom_rutes import routes
 from .server import Server
 
 
+class FastRet:
+    
+    def __init__(self) -> None:
+        pass
+
+
+
 def run_server(config):
     server = Server(config)
     server.add_router(routes)
